@@ -7,10 +7,22 @@ namespace LetsGetNeural
 {
     class Program
     {
-        public static int[] SETTINGS = new int[] { sizeof(double) * 8, 3, 3, 3, sizeof(double) * 8 };
+        public static int[] SETTINGS = new int[] { sizeof(double) * 8, 25, 25, sizeof(double) * 8 };
 
         static void Main(string[] args)
         {
+            Console.WriteLine("5000 points of data");
+            var data = GenTestData(5000);
+            BackNetTrainer trainer = new BackNetTrainer(SETTINGS, data);
+            Console.WriteLine("5000 cycles");
+            Console.WriteLine("25 M tests");
+            BackNet net = trainer.Train(5000);
+            Console.WriteLine("Saving Net");
+            net.Save("Net.nn");
+            Console.ReadKey();
+        }
+
+        static void Evolution() {
             var data = GenTestData(500);
 
             NetTrainer nt = new NetTrainer(1000, SETTINGS, data);
@@ -41,24 +53,6 @@ namespace LetsGetNeural
 
             Console.WriteLine("Waiting for trainer to stop...");
             while (nt.trainingThread.IsAlive) { Thread.Sleep(100); }
-
-            /*
-            NeuralNetwork[] n = new NeuralNetwork[1000];
-            for (int i = 0; i < n.Length; i++) {
-              n[i] = new NeuralNetwork(SETTINGS);
-            }
-
-            Array.ForEach(n, x => x.AvgCost(data));
-            Array.Sort(n, new NetComparer());
-
-            foreach (NeuralNetwork ne in n) {
-              Console.WriteLine(ne.LastTestedCost);
-            }
-            */
-
-            // var data = GenTestData(500);
-            // double c = n.AvgCost(data);
-            // Console.WriteLine(c);
         }
 
         static (double[] input, double[] output)[] GenTestData(int count)
@@ -67,8 +61,8 @@ namespace LetsGetNeural
             List<(double[] input, double[] output)> testData = new List<(double[] input, double[] output)>();
             for (int i = 0; i < count; i++)
             {
-                double a = rand.Next(-100, 100);
-                double b = (2 * a) + 3;
+                double a = 9.99E+100 * ((rand.NextDouble() * 2) - 1);
+                double b = Math.Pow(a, 2);
                 testData.Add((toBitArray(a), toBitArray(b)));
             }
             return testData.ToArray();
