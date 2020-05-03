@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace LetsGetNeural
 {
 
+    [Serializable]
     public class BackNet
     {
         public NetSettings settings { get; private set; }
@@ -15,7 +16,7 @@ namespace LetsGetNeural
             get {
                 double[] e = layers[layers.Length - 1].error;
                 double cost = 0;
-                Array.ForEach(e, x => cost += x);
+                Array.ForEach(e, x => cost += Math.Pow(x, 2));
                 return cost;
             }
         }

@@ -30,6 +30,7 @@ namespace LetsGetNeural
                     net.Feed(DataSet[y].input);
                     net.Train(DataSet[y].output);
                     errs.Add(net.Error);
+                    // Console.WriteLine(net.Error);
                 }
 
                 avgErr = 0;
