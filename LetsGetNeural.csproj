@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+<ItemGroup>
+  <Reference Include="UnityEngine">
+  <HintPath>F:/ProgramFiles/UnityHub/2019.3.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+  </Reference>
+</ItemGroup>
+
 </Project>
